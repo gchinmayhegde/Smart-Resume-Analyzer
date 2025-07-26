@@ -2,13 +2,10 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
 load_dotenv()
 
-# Base directory of the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Security: Never expose this in production; generate a unique key
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-secret-key')
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
@@ -22,6 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +52,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'resume_analyzer.wsgi.application'
 
-# Database configuration for PostgreSQL
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -66,7 +63,6 @@ DATABASES = {
     }
 }
 
-# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -74,7 +70,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# REST Framework settings for API authentication
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
@@ -84,6 +79,10 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
 }
+
+# Media settings for local file storage
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
