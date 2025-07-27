@@ -16,7 +16,6 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "tailwindcss": "^3.3.5",
     "react-scripts": "^5.0.1"
   },
   "browserslist": {
@@ -30,5 +29,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://localhost:8000"
 }
