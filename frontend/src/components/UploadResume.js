@@ -70,10 +70,27 @@ function UploadResume() {
     formData.append('job_description', jobDescription);
 
     try {
-      const response = await axios.post('/api/upload/', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-        withCredentials: true,
-      });
+      function getCSRFToken() {
+  const name = 'csrftoken';
+  const cookies = document.cookie.split(';');
+  for (let cookie of cookies) {
+    cookie = cookie.trim();
+    if (cookie.startsWith(name + '=')) {
+      return decodeURIComponent(cookie.substring(name.length + 1));
+    }
+  }
+  return null;
+}
+
+const csrfToken = getCSRFToken();
+
+const response = await axios.post('/api/upload/', formData, {
+  headers: {
+    'Content-Type': 'multipart/form-data',
+    'X-CSRFToken': csrfToken,
+  },
+  withCredentials: true,
+});
       setAnalysis(response.data);
     } catch (err) {
       console.error('Upload error:', err);
